@@ -29,9 +29,10 @@ def main():
         
             if event.type == pygame.QUIT:
                 return 
-        
+        player.rotate(dt)
         screen.fill("black")
         player.draw(screen)
+
         pygame.display.flip()
         
         
