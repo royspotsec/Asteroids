@@ -24,17 +24,18 @@ def main():
         log_state()
         
         for event in pygame.event.get():
-            dt = clock.tick(60)
             
         
             if event.type == pygame.QUIT:
                 return 
-        player.rotate(dt)
+        player.update(dt)
         screen.fill("black")
         player.draw(screen)
 
         pygame.display.flip()
-        
+        dt = clock.tick(60) / 1000ad
+
+
         
     
         
