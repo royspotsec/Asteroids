@@ -1,7 +1,7 @@
 import pygame
 from circleshape import *
 from constants import *
-from main import *
+from shot import *
 
 
 class Player (CircleShape):
@@ -10,6 +10,9 @@ class Player (CircleShape):
         self.rotation = 0
         x = SCREEN_WIDTH / 2
         y = SCREEN_HEIGHT / 2
+        cooldown_timer=0
+        
+    
     # in the Player class
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -34,8 +37,22 @@ class Player (CircleShape):
             self.rotate(-dt)
         if keys[pygame.K_d]:
             self.rotate(dt)
+        if keys[pygame.K_SPACE]:
+            if self.cooldown_timer==0:
+                return 0
+            else :
+                self.cooldown_timer=PLAYER_SHOOT_COOLDOWN_SECONDS = 0.3
+                self.shoot()
+            
+            
     def move (self,dt):
         unit_vector = pygame.Vector2(0, 1)
         rotated_vector = unit_vector.rotate(self.rotation)
         rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
         self.position += rotated_with_speed_vector
+    def shoot (self):
+        new_shot = Shot(self.position.x , self.position.y ,SHOT_RADIUS)
+        direction = pygame.Vector2(0, 1)
+        direction = direction.rotate(self.rotation)   # or whatever your angle variable is
+        direction = direction * PLAYER_SHOOT_SPEED
+        new_shot.velocity = direction
