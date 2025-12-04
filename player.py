@@ -10,7 +10,7 @@ class Player (CircleShape):
         self.rotation = 0
         x = SCREEN_WIDTH / 2
         y = SCREEN_HEIGHT / 2
-        cooldown_timer=0
+        self.cooldown_timer=0
         
     
     # in the Player class
@@ -28,6 +28,10 @@ class Player (CircleShape):
         self.rotation +=PLAYER_TURN_SPEED * dt
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        self.cooldown_timer-=dt
+        if self.cooldown_timer <=0:
+            self.cooldown_timer=0
+
         
         if keys[pygame.K_s]:
             self.move(-dt)
@@ -38,10 +42,10 @@ class Player (CircleShape):
         if keys[pygame.K_d]:
             self.rotate(dt)
         if keys[pygame.K_SPACE]:
-            if self.cooldown_timer==0:
+            if self.cooldown_timer>0:
                 return 0
             else :
-                self.cooldown_timer=PLAYER_SHOOT_COOLDOWN_SECONDS = 0.3
+                self.cooldown_timer=PLAYER_SHOOT_COOLDOWN_SECONDS 
                 self.shoot()
             
             
